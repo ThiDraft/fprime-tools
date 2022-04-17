@@ -37,8 +37,7 @@ def replace_contents(filename, what, replacement, count=1):
         fh.write(new_file)
         if new_file != changelog:
             return True
-        else:
-            return False
+        return False
 
 
 def run_impl(deployment: Path, path: Path, platform: str, verbose: bool):
@@ -345,7 +344,7 @@ def is_valid_name(word: str):
     for char in invalid_characters:
         if isinstance(word, str) and char in word:
             return char
-        elif not isinstance(word, str):
+        if not isinstance(word, str):
             raise ValueError("Incorrect usage of is_valid_name")
     return "valid"
 

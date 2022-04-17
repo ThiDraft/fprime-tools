@@ -51,7 +51,7 @@ class SerializableType(ValueType):
         # Blank member list does not validate
         if not self.mem_list:
             return
-        elif not isinstance(self.mem_list, list):
+        if not isinstance(self.mem_list, list):
             raise TypeMismatchException(list, self.mem_list)
         for member_name, member_val, format_string, description in self.mem_list:
             # Check each of these members for correct types
