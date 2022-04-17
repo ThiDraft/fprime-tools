@@ -106,7 +106,7 @@ def run_fpp_util(
     app_args = [util] + util_args + [str(item) for item in ([locs_file] + dependencies)]
     if build.cmake.verbose:
         print(f"[FPP] '{' '.join(app_args)}'")
-    return subprocess.run(app_args, capture_output=False)
+    return subprocess.run(app_args, capture_output=False, check=True)
 
 
 class FppCannotException(FprimeException):
