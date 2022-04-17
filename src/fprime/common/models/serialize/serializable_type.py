@@ -57,11 +57,11 @@ class SerializableType(ValueType):
             # Check each of these members for correct types
             if not isinstance(member_name, str):
                 raise TypeMismatchException(str, type(member_name))
-            elif not isinstance(member_val, BaseType):
+            if not isinstance(member_val, BaseType):
                 raise TypeMismatchException(BaseType, type(member_val))
-            elif not isinstance(format_string, str):
+            if not isinstance(format_string, str):
                 raise TypeMismatchException(str, type(format_string))
-            elif description is not None and not isinstance(description, str):
+            if description is not None and not isinstance(description, str):
                 raise TypeMismatchException(str, type(description))
         # When a value is set and is not empty we need to set the member properties
         if not val:

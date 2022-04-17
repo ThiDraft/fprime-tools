@@ -52,7 +52,7 @@ class EnumType(ValueType):
         for member in self.keys():
             if not isinstance(member, str):
                 raise TypeMismatchException(str, type(member))
-            elif not isinstance(self.enum_dict()[member], int):
+            if not isinstance(self.enum_dict()[member], int):
                 raise TypeMismatchException(int, self.enum_dict()[member])
         if val != "UNDEFINED" and val not in self.keys():
             raise EnumMismatchException(self.__typename, val)

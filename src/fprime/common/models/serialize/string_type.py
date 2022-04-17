@@ -36,7 +36,7 @@ class StringType(type_base.ValueType):
         """Validates that this is a string"""
         if not isinstance(val, str):
             raise TypeMismatchException(str, type(val))
-        elif self.__max_string_len is not None and len(val) > self.__max_string_len:
+        if self.__max_string_len is not None and len(val) > self.__max_string_len:
             raise StringSizeException(len(val), self.__max_string_len)
 
     def serialize(self):
@@ -47,7 +47,7 @@ class StringType(type_base.ValueType):
         if self.val is None:
             raise NotInitializedException(type(self))
         # Check string size before serializing
-        elif (
+        if (
             self.__max_string_len is not None and len(self.val) > self.__max_string_len
         ):
             raise StringSizeException(len(self.val), self.__max_string_len)
@@ -69,7 +69,7 @@ class StringType(type_base.ValueType):
                     )
                 )
             # Deal with a string that is larger than max string
-            elif self.__max_string_len is not None and val_size > self.__max_string_len:
+            if self.__max_string_len is not None and val_size > self.__max_string_len:
                 raise StringSizeException(val_size, self.__max_string_len)
             self.val = data[offset + 2 : offset + 2 + val_size].decode(DATA_ENCODING)
         except struct.error:
