@@ -483,7 +483,7 @@ class Build:
             cmake_args=self.get_cmake_args(),
             make_args=make_args,
             top_target=isinstance(target, GlobalTarget),
-            environment=self.settings.get("environment", None),
+            environment=self.settings.get("environment"),
         )
 
     def generate(self, cmake_args):
@@ -499,7 +499,7 @@ class Build:
                 self.deployment,
                 self.build_dir,
                 {**cmake_args, **self.get_cmake_args()},
-                environment=self.settings.get("environment", None),
+                environment=self.settings.get("environment"),
             )
         except CMakeException as cexc:
             raise GenerateException(str(cexc), cexc.exit_code) from cexc
