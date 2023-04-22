@@ -257,11 +257,10 @@ def add_fbuild_parsers(
             target, subparsers, common, parsers, help_text=help_text
         ): run_fbuild_cli
         for target in Target.get_all_targets()
+    } | {
+        command: run_fbuild_cli
+        for command in add_special_targets(
+            subparsers, common, help_text=help_text
+        )
     }
-    run_map.update(
-        {
-            command: run_fbuild_cli
-            for command in add_special_targets(subparsers, common, help_text=help_text)
-        }
-    )
     return run_map, parsers

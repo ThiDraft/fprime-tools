@@ -28,11 +28,7 @@ def utility_entry(args):
     parsed, cmake_args, make_args, parser, runners = parse_args(args)
 
     try:
-        if skip_build_loading(parsed):
-            build = None
-        else:
-            build = load_build(parsed)
-
+        build = None if skip_build_loading(parsed) else load_build(parsed)
         # runners is a Dict[str, Callable] of {command_name: handler_functions} pairs
         return runners[parsed.command](
             build, parsed, cmake_args, make_args, getattr(parsed, "pass_through", [])
@@ -53,10 +49,11 @@ def utility_entry(args):
 def skip_build_loading(parsed):
     """Determines if the build load step should be skipped. Commands that do not require a build object
     should manually be added here by the developer."""
-    if parsed.command == "new" and parsed.new_deployment:
-        return True
-    if parsed.command == "new" and parsed.new_project:
-        return True
+    if parsed.command == "new":
+        if parsed.new_deployment:
+            return True
+        if parsed.new_project:
+            return True
     return False
 
 
@@ -216,9 +213,8 @@ def validate(parsed, unknown):
             match.group(1): match.group(2)
             for match in [CMAKE_REG.match(arg) for arg in unknown]
         }
-        cmake_args.update(d_args)
+        cmake_args |= d_args
         unknown = [arg for arg in unknown if not CMAKE_REG.match(arg)]
-    # Build type only for generate, jobs only for non-generate
     elif parsed.command in Target.get_all_targets():
         parsed.settings = None  # Force to load from cache if possible
         make_args["--jobs"] = 1 if parsed.jobs <= 0 else parsed.jobs
@@ -297,9 +293,9 @@ def parse_args(args):
         subparsers, common_parser, HelpText
     )
     fpp_runners, fpp_parsers = add_fpp_parsers(subparsers, common_parser)
-    parsers.update(fbuild_parsers)
+    parsers |= fbuild_parsers
     parsers.update(fpp_parsers)
-    runners.update(fbuild_runners)
+    runners |= fbuild_runners
     runners.update(fpp_runners)
     runners.update(add_special_parsers(subparsers, common_parser, HelpText))
 

@@ -476,7 +476,7 @@ class CMakeHandler:
             environment = {}
 
         cm_environ = os.environ.copy()
-        cm_environ.update(self.settings.get("environment", {}))
+        cm_environ |= self.settings.get("environment", {})
         cm_environ.update(environment)
         cargs = ["cmake"]
         if not write_override:
