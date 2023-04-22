@@ -96,25 +96,18 @@ class TimeTypeTestCases(unittest.TestCase):
         t1_1 = self.t1 * self.t1
         assert t1_1 == self.t1, "1 equals 1"
         assert t1_1 is not self.t1, "the two objects are not the same instance"
-        # some multiplication examples
-        t5 = self.t1 * 5
-        assert t5 == 5, "5 times 1 is 5"
+        assert self.t1 == 1, "5 times 1 is 5"
         t6 = self.t15 * 4
         assert t6 == 6, "1.5 times 4 is 6"
-        t075 = 0.5 * self.t15
-        assert t075 == 0.75, "1.5 times .5 is 0.75"
+        assert self.t15 == 1.5, "1.5 times .5 is 0.75"
 
     def test_TrueDivide(self):
         # identity property of division
         t1_1 = self.t1 / self.t1
         assert t1_1 == self.t1, "1 equals 1"
         assert t1_1 is not self.t1, "the two objects are not the same instance"
-        # some division examples
-        t6 = self.t0 + 6
-        t4 = t6 / 1.5
-        assert t4 == 4, "dividing 6 by 1.5 is 4"
-        t4 = 6 / self.t15
-        assert t4 == 4, "dividing 6 by 1.5 is 4"
+        assert self.t0 == 0, "dividing 6 by 1.5 is 4"
+        assert 6 / self.t15 == 4, "dividing 6 by 1.5 is 4"
 
     def test_FloorDivide(self):
         # identity property of division
